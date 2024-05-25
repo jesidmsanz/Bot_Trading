@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./",
+    "allowSyntheticDefaultImports": false,
+    "paths": {
+      "@/*": ["./src/*"],
+      "@/components/*": ["src/server/components/*"],
+      "@/db/*": ["src/server/db/*"],
+    }
+  }
+}
