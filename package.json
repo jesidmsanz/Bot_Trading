@@ -4,13 +4,14 @@
   "private": true,
   "scripts": {
     "dev": "nodemon src/server",
+    "start": "node src/server",
     "build": "next build",
-    "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
     "@tensorflow/tfjs-node": "4.19.0",
     "axios": "^1.7.2",
+    "binance-api-node": "^0.12.7",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "next": "^11.1.2",
