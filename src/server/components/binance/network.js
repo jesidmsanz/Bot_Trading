@@ -5,20 +5,31 @@ import baseHandler from "@/server/network/baseHandler";
 const handler = baseHandler();
 const apiURL = "/api/binance";
 
-// GET: api/binance/runBot
-handler.get(`${apiURL}/runBot`, async function (req, res) {
+// GET: api/binance/validCpuorGpu
+handler.get(`${apiURL}/validCpuorGpu`, async function (req, res) {
   try {
-    const result = await controller.runBot();
+    const result = await controller.validCpuorGpu();
     response.success(req, res, result);
   } catch (error) {
     console.log("ERROR: ", error);
     response.error(req, res, "Error on basics", 400, error);
   }
 });
-// GET: api/binance/trainingModel
-handler.get(`${apiURL}/trainingModel`, async function (req, res) {
+
+// GET: api/binance/entreningBot
+handler.get(`${apiURL}/entreningBot`, async function (req, res) {
   try {
-    const result = await controller.trainingModel();
+    const result = await controller.entreningBot();
+    response.success(req, res, result);
+  } catch (error) {
+    console.log("ERROR: ", error);
+    response.error(req, res, "Error on basics", 400, error);
+  }
+});
+// GET: api/binance/generateTrades
+handler.get(`${apiURL}/generateTrades`, async function (req, res) {
+  try {
+    const result = await controller.generateTrades();
     response.success(req, res, result);
   } catch (error) {
     console.log("ERROR: ", error);

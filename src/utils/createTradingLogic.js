@@ -1,4 +1,4 @@
-const tf = require("@tensorflow/tfjs-node");
+const tf = require("@tensorflow/tfjs-node-gpu");
 
 export default async function createTradingLogic(model, indicators, prices) {
   // Definir la lógica de trading

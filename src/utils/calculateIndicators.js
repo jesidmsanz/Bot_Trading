@@ -1,27 +1,45 @@
-const TechnicalIndicators = require("technicalindicators");
+const ti = require("technicalindicators");
 
-export default function calculateIndicators(data) {
-  // Extraer los precios de cierre
-  const closingPrices = data.map((candle) => parseFloat(candle.close));
+export default function calculateIndicators(data, period = 30) {
+  let close = data.map((item) => Number(item.close));
+  let high = data.map((item) => Number(item.high));
+  let low = data.map((item) => Number(item.low));
 
-  // Calcular la SMA
-  const sma = TechnicalIndicators.SMA.calculate({
-    values: closingPrices,
-    period: 14,
-  });
+  // Calculate Simple Moving Average (SMA)
+  let sma = ti.SMA.calculate({ period: period, values: close });
 
-  // Calcular el RSI
-  const rsi = TechnicalIndicators.RSI.calculate({
-    values: closingPrices,
-    period: 14,
-  });
+  // Calculate Relative Strength Index (RSI)
+  let rsi = ti.RSI.calculate({ period: period, values: close });
 
-  // Calcular las bandas de Bollinger
-  const bollingerBands = TechnicalIndicators.BollingerBands.calculate({
-    values: closingPrices,
-    period: 20,
+  // Calculate Bollinger Bands
+  let bb = ti.BollingerBands.calculate({
+    period: period,
     stdDev: 2,
+    values: close,
   });
 
-  return { sma, rsi, bollingerBands };
+  // Calculate Average True Range (ATR)
+  let atr = ti.ATR.calculate({
+    period: period,
+    high: high,
+    low: low,
+    close: close,
+  });
+
+  // Add indicators to data
+  for (let i = 0; i < data.length; i++) {
+    if (i >= period) {
+      data[i].sma = sma[i - period];
+      data[i].rsi = rsi[i - period];
+      data[i].bb = bb[i - period];
+      data[i].atr = atr[i - period];
+    } else {
+      data[i].sma = null;
+      data[i].rsi = null;
+      data[i].bb = null;
+      data[i].atr = null;
+    }
+  }
+
+  return data;
 }
